@@ -1,0 +1,13 @@
+{
+  "cards": [
+    {
+      "summary": "Success Card",
+      "detail": "",
+      "source": {
+        "label": "Static CDS Service",
+        "url": "http://example.com"
+      },
+      "indicator": "success"
+    }
+  ]
+}

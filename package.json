@@ -1,0 +1,33 @@
+{
+  "name": "cds-hooks-prefetch-proxy",
+  "version": "0.1.0",
+  "description": "Simple nodejs server that simulates the EHR's side of a CDS Hooks interaction",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha && eslint .",
+    "start": "node bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/cds-hooks/cds-hooks-prefetch-proxy.git"
+  },
+  "author": "Matt Berther",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cds-hooks/cds-hooks-prefetch-proxy/issues"
+  },
+  "homepage": "https://github.com/cds-hooks/cds-hooks-prefetch-proxy#readme",
+  "dependencies": {
+    "body-parser": "1.15.1",
+    "cds-validator": "0.3.0",
+    "express": "4.13.4",
+    "request-promise": "3.0.0",
+    "url-join": "1.1.0"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "eslint": "2.10.2",
+    "mocha": "2.4.5",
+    "supertest": "1.2.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "hookInstance": "d1577c69-dfbe-44ad-ba6d-3e05e953b2ea",
+  "fhirServer": "http://localhost:8080/",
+  "hook": "patient-view",
+  "redirect": "http://hooks2.smarthealthit.org/service-done.html",
+  "user": "Practitioner/example",
+  "context": [
+    {}
+  ],
+  "patient": "1288992",
+  "encounter": "1384912",
+  "prefetch": {
+    "patient": {
+      "response": {
+        "status": "200 OK"
+      },
+      "resource": {
+        "resourceType": "Patient",
+        "gender": "male",
+        "birthDate": "1925-12-23",
+        "id": "1288992",
+        "active": true
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # cds-prefetch-proxy
 
-[![Circle CI](https://circleci.com/gh/cds-hooks/cds-prefetch-proxy.svg?style=shield)](https://circleci.com/gh/cds-hooks/cds-prefetch-proxy)
+[![Build Status](https://travis-ci.org/cds-hooks/cds-prefetch-proxy.svg?branch=master)](https://travis-ci.org/cds-hooks/cds-prefetch-proxy)
 [![devDependency Status](https://david-dm.org/cds-hooks/cds-prefetch-proxy.svg)](https://david-dm.org/cds-hooks/cds-prefetch-proxy)
 
 A generic proxy that takes the URL of an underlying service, and exposes a gateway in front of it.
@@ -23,8 +23,8 @@ POST /:actualServiceUrl/cds-services/:serviceId
   ✓ should return a 404 failure when the client tries to proxy a service that isnt discoverable
   ✓ should return a 502 failure when the upstream service returns invalid json
   ✓ should return a 502 failure when there is an error with the upstream service
-  ✓ should not query the fhir server if prefetch data is not sent with the service request
-  ✓ should query the fhir server if prefetch data is sent with the service request
+  ✓ should not query the fhir server if prefetch data is included with the service request
+  ✓ should query the fhir server if prefetch data is missing from the service request
 
 POST /:actualServiceUrl/cds-services/:serviceId/analytics/:uuid
   ✓ should forward the call to the upstream service and return the response to the client

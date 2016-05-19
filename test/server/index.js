@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -17,7 +18,7 @@ app.post('/cds-services/:serviceId', function(req, res) {
     return res.status(500).send('Internal Server Error');
   }
 
-  readFile('/data/' + req.params.serviceId + '-card.json', function(data) {
+  readFile(path.join('/data', req.params.serviceId + '-card.json'), function(data) {
     if (req.params.serviceId === 'patient') { data.cards[0].detail = req.body.prefetch.patient.resource.id; }
     res.json(data);
   });
@@ -64,7 +65,7 @@ app.setServiceResult = function(code) {
 };
 
 function readFile(file, cb) {
-  fs.readFile(__dirname + file, function(err, data) {
+  fs.readFile(path.join(__dirname, file), function(err, data) {
     if(err) throw err;
     return cb(JSON.parse(data));
   });

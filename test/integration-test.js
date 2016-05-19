@@ -1,6 +1,8 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
+const urljoin = require('../lib/url-join');
 const expect = require('chai').expect;
 
 const app = require('../app');
@@ -21,14 +23,14 @@ describe('cds prefetch proxy', function() {
   });
 
   describe('POST /:actualServiceUrl/cds-services/:serviceId/analytics/:uuid', function() {
-    const apiEndpoint = '/' + encodeURIComponent(serviceBase) + '/cds-services/sample-service/analytics/';
+    const apiEndpoint = urljoin('/', encodeURIComponent(serviceBase), '/cds-services/sample-service/analytics/');
 
     it('should forward the call to the upstream service and return the response to the client', function(done) {
-      api.post(apiEndpoint + '5ae4b91').expect(204, done);
+      api.post(urljoin(apiEndpoint, '5ae4b91')).expect(204, done);
     });
 
     it('should return a 502 failure when there is an error with the upstream service', function(done) {
-      api.post(apiEndpoint + 'error')
+      api.post(urljoin(apiEndpoint, 'error'))
         .expect(502)
         .expect('Internal Server Error')
         .end(done);
@@ -36,7 +38,7 @@ describe('cds prefetch proxy', function() {
   });
 
   describe('GET /:actualServiceUrl/cds-services', function() {
-    const apiEndpoint = '/' + encodeURIComponent(serviceBase) + '/cds-services';
+    const apiEndpoint = urljoin('/', encodeURIComponent(serviceBase), '/cds-services');
 
     afterEach(function() {
       testServer.setServiceResult(200);
@@ -75,11 +77,11 @@ describe('cds prefetch proxy', function() {
   });
 
   describe('POST /:actualServiceUrl/cds-services/:serviceId', function() {
-    const apiEndpoint = '/' + encodeURIComponent(serviceBase) + '/cds-services';
+    const apiEndpoint = urljoin('/', encodeURIComponent(serviceBase), '/cds-services');
     var serviceRequest;
 
     beforeEach(function(done) {
-      fs.readFile(__dirname + '/fixtures/service-request.json', function(err, data) {
+      fs.readFile(path.join(__dirname, '/fixtures/service-request.json'), function(err, data) {
         if(err) throw err;
         serviceRequest = JSON.parse(data);
         done();
@@ -87,7 +89,7 @@ describe('cds prefetch proxy', function() {
     });
 
     it('should forward the call to the upstream service and return the response to the client', function(done) {
-      api.post(apiEndpoint + '/success')
+      api.post(urljoin(apiEndpoint, '/success'))
         .set('Accept', 'application/json')
         .send(serviceRequest)
         .expect(200)
@@ -106,28 +108,28 @@ describe('cds prefetch proxy', function() {
     });
 
     it('should return a 400 failure when the client sends an invalid service request', function(done) {
-      api.post(apiEndpoint + '/invalid')
+      api.post(urljoin(apiEndpoint, '/invalid'))
         .set('Accept', 'application/json')
         .send({ foo: 'bar' })
         .expect(400, done);
     });
 
     it('should return a 404 failure when the client tries to proxy a service that isnt discoverable', function(done) {
-      api.post(apiEndpoint + '/not-exist')
+      api.post(urljoin(apiEndpoint, '/not-exist'))
         .set('Accept', 'application/json')
         .send(serviceRequest)
         .expect(404, done);
     });
 
     it('should return a 502 failure when the upstream service returns invalid json', function(done) {
-      api.post(apiEndpoint + '/invalid')
+      api.post(urljoin(apiEndpoint, '/invalid'))
         .set('Accept', 'application/json')
         .send(serviceRequest)
         .expect(502, done);
     });
 
     it('should not query the fhir server if prefetch data is included with the service request', function(done) {
-      api.post(apiEndpoint + '/patient')
+      api.post(urljoin(apiEndpoint, '/patient'))
         .set('Accept', 'application/json')
         .send(serviceRequest)
         .expect(200)
@@ -140,7 +142,7 @@ describe('cds prefetch proxy', function() {
     it('should query the fhir server if prefetch data is missing from the service request', function(done) {
       delete serviceRequest.prefetch;
 
-      api.post(apiEndpoint + '/patient')
+      api.post(urljoin(apiEndpoint, '/patient'))
         .set('Accept', 'application/json')
         .send(serviceRequest)
         .expect(function(res) {
@@ -150,7 +152,7 @@ describe('cds prefetch proxy', function() {
     });
 
     it('should return a 502 failure when there is an error with the upstream service', function(done) {
-      api.post(apiEndpoint + '/500')
+      api.post(urljoin(apiEndpoint, '/500'))
         .set('Accept', 'application/json')
         .send(serviceRequest)
         .expect(502)

@@ -1,6 +1,6 @@
 {
   "hookInstance": "d1577c69-dfbe-44ad-ba6d-3e05e953b2ea",
-  "fhirServer": "http://localhost:8080/",
+  "fhirServer": "http://localhost:8080",
   "hook": "patient-view",
   "redirect": "http://hooks2.smarthealthit.org/service-done.html",
   "user": "Practitioner/example",

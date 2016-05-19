@@ -126,7 +126,7 @@ describe('cds prefetch proxy', function() {
         .expect(502, done);
     });
 
-    it('should not query the fhir server if prefetch data is not sent with the service request', function(done) {
+    it('should not query the fhir server if prefetch data is included with the service request', function(done) {
       api.post(apiEndpoint + '/patient')
         .set('Accept', 'application/json')
         .send(serviceRequest)
@@ -137,7 +137,7 @@ describe('cds prefetch proxy', function() {
         .end(done);
     });
 
-    it('should query the fhir server if prefetch data is sent with the service request', function(done) {
+    it('should query the fhir server if prefetch data is missing from the service request', function(done) {
       delete serviceRequest.prefetch;
 
       api.post(apiEndpoint + '/patient')

@@ -38,5 +38,5 @@ This proxy service can be deployed with Docker. By default, the Dockerfile expos
 $ docker build -t <your-name>/cds-hooks-prefetch-proxy .
 Successfully built <container-id>
 
-$ docker run -p 3000:3000 -d --rm <your-name>/cds-hooks-prefetch-proxy npm start
+$ docker run -p 3000:3000 -d <your-name>/cds-hooks-prefetch-proxy npm start
 ```

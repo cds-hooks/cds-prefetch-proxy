@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const urljoin = require('../lib/url-join');
+const urljoin = require('url-join');
 const expect = require('chai').expect;
 
 const app = require('../app');
@@ -23,7 +23,7 @@ describe('cds prefetch proxy', function() {
   });
 
   describe('POST /:actualServiceUrl/cds-services/:serviceId/analytics/:uuid', function() {
-    const apiEndpoint = urljoin('/', encodeURIComponent(serviceBase), '/cds-services/sample-service/analytics/');
+    const apiEndpoint = urljoin('', encodeURIComponent(serviceBase), '/cds-services/sample-service/analytics/');
 
     it('should forward the call to the upstream service and return the response to the client', function(done) {
       api.post(urljoin(apiEndpoint, '5ae4b91')).expect(204, done);
@@ -38,7 +38,7 @@ describe('cds prefetch proxy', function() {
   });
 
   describe('GET /:actualServiceUrl/cds-services', function() {
-    const apiEndpoint = urljoin('/', encodeURIComponent(serviceBase), '/cds-services');
+    const apiEndpoint = urljoin('', encodeURIComponent(serviceBase), '/cds-services');
 
     afterEach(function() {
       testServer.setServiceResult(200);
@@ -77,7 +77,7 @@ describe('cds prefetch proxy', function() {
   });
 
   describe('POST /:actualServiceUrl/cds-services/:serviceId', function() {
-    const apiEndpoint = urljoin('/', encodeURIComponent(serviceBase), '/cds-services');
+    const apiEndpoint = urljoin('', encodeURIComponent(serviceBase), '/cds-services');
     var serviceRequest;
 
     beforeEach(function(done) {

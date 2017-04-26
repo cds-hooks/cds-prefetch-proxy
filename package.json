@@ -21,7 +21,8 @@
     "body-parser": "1.15.1",
     "cds-validator": "0.3.0",
     "express": "4.13.4",
-    "request-promise": "3.0.0"
+    "request-promise": "3.0.0",
+    "url-join": "^2.0.1"
   },
   "devDependencies": {
     "chai": "3.5.0",

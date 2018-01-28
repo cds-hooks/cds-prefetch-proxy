@@ -31,6 +31,18 @@ POST /:actualServiceUrl/cds-services/:serviceId/analytics/:uuid
   ✓ should return a 502 failure when there is an error with the upstream service
 ```
 
+## Example
+The underlying service MUST be specified as the first segment of the request path and must be url encoded. To set up this proxy on localhost to forward to the CDS Hooks sandbox at https://fhir-org-cds-services.appspot.com/, use the following request:
+
+```
+$ npm start
+$ curl http://localhost:3000/https%3A%2F%2Ffhir-org-cds-services.appspot.com/cds-services
+
+{"services":[{"hook":"medication-prescribe","name":"Random grab-bag of mock services","title":"Random grab-bag of mock services","description":"Generate a bunch of cards for various reasons","id":"pediatric-dose-check","prefetch":{"patient":"Patient/{{Patient.id}}"}},{"name":"CMS Pricing Service","title":"CMS Pricing Service","id":"cms-price-check","description":"Estimate the price of a prescription based on historical pharmacy dispensing data","hook":"medication-prescribe"},{"id":"patient-hello-world","name":"Patient hello world","title":"Patient hello world","description":"Greet patient by name","hook":"patient-view","prefetch":{"patientToGreet":"Patient/{{Patient.id}}"}}]}
+
+$
+```
+
 ## Deployment
 This proxy service can be deployed with Docker. By default, the Dockerfile exposes port 3000. Creating the Docker container can be done by:
 
